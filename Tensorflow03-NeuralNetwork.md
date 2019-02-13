@@ -370,12 +370,15 @@ with tf.Session() as sess:
 - 使用`tf.summary.histogram`
 - 使用`tf.summary.merge_all()`
 
-*注：可能是tensorflow或者jupyter的问题，如果运行下面的代码不成功，可以考虑重新启动环境后再运行一次*
+*注：如果运行代码的时候提示merged没有feed，是因为之前已经创建过一些节点并且加入了summary但是没有清空，此次没有在上面加入feed的dict中。这时可以考虑重新启动环境后再运行一次或者像下述代码一样加入`tf.reset_default_graph`*
 
 
 ```python
 import tensorflow as tf
 import os
+
+# 避免有多余的被summary的节点造成merged出错
+tf.reset_default_graph()
 
 # 随便给一个记录的目录
 path = r'C:\logs'
